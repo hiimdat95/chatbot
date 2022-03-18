@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.18.1</Version>
+    <Description>This is a rudimentary chatbot for Tinode using gRPC API. It's written in .Net standard as a demonstration that the API is language-independent.</Description>
+    <Copyright>Tinode</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <Authors>BenDerPan</Authors>
+    <Product>Tinode</Product>
+    <Company>Tinode</Company>
+    <PackageProjectUrl>https://github.com/tinode/csharpbot</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageTags>Tinode Chatbot</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/tinode/csharpbot</RepositoryUrl>
+    <RepositoryType>github.com</RepositoryType>
+    <PackageReleaseNotes>Build your own chatbot easy with .net or .net core.</PackageReleaseNotes>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>0.17.10.0</AssemblyVersion>
+    <FileVersion>0.18.1.0</FileVersion>
+    <PackageIcon>logo192.png</PackageIcon>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.19.4" />
+    <PackageReference Include="Grpc" Version="2.44.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.44.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RestSharp" Version="107.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="logo192.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
