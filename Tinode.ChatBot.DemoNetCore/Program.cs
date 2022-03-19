@@ -235,30 +235,30 @@ namespace Tinode.ChatBot.DemoNetCore
                            Console.WriteLine($"Login in with token {o.Token}");
                            bot = new ChatBot(serverHost: host, listen: listen, schema: schemaArg, secret: secretArg);
                        }
-                       else if (!string.IsNullOrEmpty(o.Basic))
-                       {
-                           schemaArg = "basic";
-                           secretArg = Encoding.UTF8.GetString(Encoding.Default.GetBytes(o.Basic));
-                           Console.WriteLine($"Login in with login:password {o.Basic}");
-                           bot = new ChatBot(serverHost: host, listen: listen, schema: schemaArg, secret: secretArg);
-                       }
-                       else
-                       {
-                           cookieFile = o.CookieFile;
-                           Console.WriteLine($"Login in with cookie file {o.CookieFile}");
-                           bot = new ChatBot(serverHost: host, listen: listen, cookie: cookieFile, schema: string.Empty, secret: string.Empty);
-                           if (bot.ReadAuthCookie(out var schem, out var secret))
-                           {
-                               bot.Schema = schem;
-                               bot.Secret = secret;
-                           }
-                           else
-                           {
-                               Console.WriteLine("Login in with cookie file failed, please check your credentials and try again... Press any key to exit.");
-                               Console.ReadKey();
-                               return;
-                           }
-                       }
+                       //else if (!string.IsNullOrEmpty(o.Basic))
+                       //{
+                       schemaArg = "basic";
+                       secretArg = Encoding.UTF8.GetString(Encoding.Default.GetBytes("alice:alice123"));
+                       Console.WriteLine($"Login in with login:password {o.Basic}");
+                       bot = new ChatBot(serverHost: host, listen: listen, schema: schemaArg, secret: secretArg);
+                       //}
+                       //else
+                       //{
+                       //    cookieFile = o.CookieFile;
+                       //    Console.WriteLine($"Login in with cookie file {o.CookieFile}");
+                       //    bot = new ChatBot(serverHost: host, listen: listen, cookie: cookieFile, schema: string.Empty, secret: string.Empty);
+                       //    if (bot.ReadAuthCookie(out var schem, out var secret))
+                       //    {
+                       //        bot.Schema = schem;
+                       //        bot.Secret = secret;
+                       //    }
+                       //    else
+                       //    {
+                       //        Console.WriteLine("Login in with cookie file failed, please check your credentials and try again... Press any key to exit.");
+                       //        Console.ReadKey();
+                       //        return;
+                       //    }
+                       //}
                        bot.ServerDataEvent += Bot_ServerDataEvent;
                        bot.ServerMetaEvent += Bot_ServerMetaEvent;
                        bot.ServerPresEvent += Bot_ServerPresEvent;
