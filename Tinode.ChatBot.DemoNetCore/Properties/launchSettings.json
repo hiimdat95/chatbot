@@ -2,7 +2,7 @@
   "profiles": {
     "Tinode.ChatBot.DemoNetCore": {
       "commandName": "Project",
-      "commandLineArgs": "-B alice:alice123"
+      "commandLineArgs": "-B datlt3:123456"
     }
   }
 }
