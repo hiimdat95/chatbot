@@ -494,7 +494,7 @@ namespace Tinode.ChatBot.DemoNetCore
                        //else if (!string.IsNullOrEmpty(o.Basic))
                        //{
                        schemaArg = "basic";
-                       secretArg = Encoding.UTF8.GetString(Encoding.Default.GetBytes("alice:alice123"));
+                       secretArg = Encoding.UTF8.GetString(Encoding.Default.GetBytes("datlt3:123456"));
                        Console.WriteLine($"Login in with login:password {o.Basic}");
                        bot = new ChatBot(serverHost: host, listen: listen, schema: schemaArg, secret: secretArg);
                        //}
