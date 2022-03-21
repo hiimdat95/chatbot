@@ -417,7 +417,15 @@ namespace Tinode.ChatBot.DemoNetCore
                         }
                     };
 
-                    responseText = lstQuestionAnswer.FirstOrDefault(x => x.Key.Contains(msg.Text)).Message.ToString();
+                    responseText = lstQuestionAnswer.FirstOrDefault(x => x.Key.Contains(msg.Text))?.Message.ToString();
+                    if (!string.IsNullOrEmpty(responseText))
+                    {
+                        Console.WriteLine(msg.Text);
+                    }
+                    else
+                    {
+                        responseText = "Hello";
+                    }
                     MsgBuilder builder = new MsgBuilder();
                     builder.AppendText(responseText);
                     //responseMsg = MsgBuilder.BuildTextMessage(responseText);
@@ -495,6 +503,7 @@ namespace Tinode.ChatBot.DemoNetCore
                        //{
                        schemaArg = "basic";
                        secretArg = Encoding.UTF8.GetString(Encoding.Default.GetBytes("datlt3:123456"));
+                       var secret2 = System.Text.Encoding.UTF8.GetBytes("datlt3:123456");
                        Console.WriteLine($"Login in with login:password {o.Basic}");
                        bot = new ChatBot(serverHost: host, listen: listen, schema: schemaArg, secret: secretArg);
                        //}
