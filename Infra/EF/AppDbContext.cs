@@ -12,6 +12,7 @@ namespace Infrastructure.EF
         }
 
         public virtual DbSet<ChatHistories> ChatHistories { get; set; }
+        public virtual DbSet<VwUser> VwUser { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +25,12 @@ namespace Infrastructure.EF
                 entity.Property(e => e.FromId).IsUnicode(false);
 
                 entity.Property(e => e.ToId).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VwUser>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("Vw_User");
             });
             base.OnModelCreating(modelBuilder);
         }

@@ -1,5 +1,11 @@
 ﻿using CommandLine;
+using Domain.Entities;
+using Infrastructure.EF;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Pbx;
+using Repository.Interfaces;
+using Repository.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +17,13 @@ namespace Tinode.ChatBot.DemoNetCore
     public class Chat
     {
         private static ChatBot bot;
+        //private readonly IBaseRepository _repository;
+        //private readonly IUnitOfWork _unitOfWork;
 
-        public Chat(string[] args)
+        public Chat(string[] args, IServiceCollection services)
         {
+            //_repository = repository;
+            //_unitOfWork = unitOfWork;
             Console.CancelKeyPress += Console_CancelKeyPress;
             string schemaArg = string.Empty;
             string secretArg = string.Empty;
@@ -44,7 +54,7 @@ namespace Tinode.ChatBot.DemoNetCore
                        //{
                        schemaArg = "basic";
                        secretArg = Encoding.UTF8.GetString(Encoding.Default.GetBytes("chatbot:123456"));
-                       var secret2 = System.Text.Encoding.UTF8.GetBytes("datlt3:123456");
+                       //var secret2 = System.Text.Encoding.UTF8.GetBytes("datlt3:123456");
                        Console.WriteLine($"Login in with login:password {o.Basic}");
                        bot = new ChatBot(serverHost: host, listen: listen, schema: schemaArg, secret: secretArg);
                        //}
@@ -74,7 +84,7 @@ namespace Tinode.ChatBot.DemoNetCore
                        bot.DisconnectedEvent += Bot_DisconnectedEvent;
                        //your should set your chatserver's http base url and api access key to handle larget file upload
                        bot.SetHttpApi("http://localhost:6660", "AQAAAAABAABtfBKva9nJN3ykjBi0feyL");
-                       bot.BotResponse = new BotReponse(bot);
+                       bot.BotResponse = new BotReponse(bot, services);
                        bot.Start().Wait();
 
                        Console.WriteLine("[Bye Bye] ChatBot Stopped");
@@ -105,25 +115,51 @@ namespace Tinode.ChatBot.DemoNetCore
         public class BotReponse : IBotResponse
         {
             private ChatBot bot;
+            private readonly IServiceCollection _serviceCollection;
+            //private readonly IUnitOfWork _unitOfWork;
 
-            public BotReponse(ChatBot bot)
+            public BotReponse(ChatBot bot, IServiceCollection services)
             {
+                _serviceCollection = services;
                 this.bot = bot;
             }
 
             public async Task<ChatMessage> ThinkAndReply(ServerData message)
             {
-                foreach (var sub in bot.Subscribers)
-                {
-                    //Current account friends infousraG65M7QvvO8
-                }
                 ChatMessage responseMsg;
-                var msgText = message.Content.ToStringUtf8();
-                var msg = MsgBuilder.Parse(message);
-                string responseText = string.Empty;
-                if (msg.IsPlainText)
+                try
                 {
-                    var lstQuestionAnswer = new List<MessageReponse>
+                    var lstChatHistory = new List<ChatHistories>();
+
+                    var serviceprovider = _serviceCollection.BuildServiceProvider();
+                    using (var scope = serviceprovider.CreateScope())
+                    {
+                        //  Lấy Service trong một pham vi
+                        var dbContext = serviceprovider.GetService<AppDbContext>();
+                        var userChatBot = dbContext.VwUser.Where(x => x.UserName == "chatbot").FirstOrDefault();
+                        //var unitOfWork = serviceprovider.GetService<IUnitOfWork>();
+                        foreach (var sub in bot.Subscribers)
+                        {
+                            //Current account friends infousraG65M7QvvO8
+                        }
+
+                        var msgText = message.Content.ToStringUtf8();
+                        var msg = MsgBuilder.Parse(message);
+                        string responseText = string.Empty;
+                        lstChatHistory.Add(new ChatHistories
+                        {
+                            Id = Guid.NewGuid(),
+                            Content = msg.Text,
+                            FromId = message.FromUserId,
+                            ToId = userChatBot?.ChatUid != null ? "usr" + userChatBot.ChatUid : "chatbot",
+                            CreatedAt = DateTime.Now,
+                            CreatedBy = Guid.Empty,
+                            UpdatedAt = DateTime.Now,
+                            UpdatedBy = Guid.Empty,
+                        });
+                        if (msg.IsPlainText)
+                        {
+                            var lstQuestionAnswer = new List<MessageReponse>
                     {
                         new MessageReponse
                         {
@@ -488,55 +524,76 @@ namespace Tinode.ChatBot.DemoNetCore
                         }
                     };
 
-                    responseText = lstQuestionAnswer.FirstOrDefault(x => x.Key.Contains(msg.Text))?.Message.ToString();
-                    if (!string.IsNullOrEmpty(responseText))
-                    {
-                        Console.WriteLine(msg.Text);
+                            responseText = lstQuestionAnswer.FirstOrDefault(x => x.Key.Contains(msg.Text))?.Message.ToString();
+                            if (!string.IsNullOrEmpty(responseText))
+                            {
+                                Console.WriteLine(msg.Text);
+                            }
+                            else
+                            {
+                                responseText = "Hello";
+                            }
+                            MsgBuilder builder = new MsgBuilder();
+                            builder.AppendText(responseText);
+                            //responseMsg = MsgBuilder.BuildTextMessage(responseText);
+                            responseMsg = builder.Message;
+                        }
+                        else
+                        {
+                            responseMsg = msg;
+                            //Extract more information
+                            var mentions = msg.GetMentions();
+                            foreach (var m in mentions)
+                            {
+                                Console.WriteLine($"Mentions:{m.Val}");
+                            }
+
+                            var images = msg.GetImages();
+                            foreach (var image in images)
+                            {
+                                Console.WriteLine($"Image:Name={image.Name} Mime={image.Mime}");
+                            }
+
+                            var hashTags = msg.GetHashTags();
+                            foreach (var hash in hashTags)
+                            {
+                                Console.WriteLine($"HashTags:{hash.Val}");
+                            }
+
+                            var links = msg.GetLinks();
+                            foreach (var link in links)
+                            {
+                                Console.WriteLine($"Links:{link.Url}");
+                            }
+
+                            var files = msg.GetGenericAttachment();
+                            foreach (var f in files)
+                            {
+                                Console.WriteLine($"Image:Name={f.Name} Mime={f.Mime}");
+                            }
+                        }
+                        lstChatHistory.Add(new ChatHistories
+                        {
+                            Id = Guid.NewGuid(),
+                            Content = responseMsg.Text,
+                            FromId = userChatBot?.ChatUid != null ? "usr" + userChatBot.ChatUid : "chatbot",
+                            ToId = message.FromUserId,
+                            CreatedAt = DateTime.Now,
+                            CreatedBy = Guid.Empty,
+                            UpdatedAt = DateTime.Now,
+                            UpdatedBy = Guid.Empty,
+                        });
+                        await dbContext.AddRangeAsync(lstChatHistory);
+                        await dbContext.SaveChangesAsync();
+                        return responseMsg;
                     }
-                    else
-                    {
-                        responseText = "Hello";
-                    }
-                    MsgBuilder builder = new MsgBuilder();
-                    builder.AppendText(responseText);
-                    //responseMsg = MsgBuilder.BuildTextMessage(responseText);
-                    responseMsg = builder.Message;
                 }
-                else
+                catch (Exception ex)
                 {
-                    responseMsg = msg;
-                    //Extract more information
-                    var mentions = msg.GetMentions();
-                    foreach (var m in mentions)
-                    {
-                        Console.WriteLine($"Mentions:{m.Val}");
-                    }
-
-                    var images = msg.GetImages();
-                    foreach (var image in images)
-                    {
-                        Console.WriteLine($"Image:Name={image.Name} Mime={image.Mime}");
-                    }
-
-                    var hashTags = msg.GetHashTags();
-                    foreach (var hash in hashTags)
-                    {
-                        Console.WriteLine($"HashTags:{hash.Val}");
-                    }
-
-                    var links = msg.GetLinks();
-                    foreach (var link in links)
-                    {
-                        Console.WriteLine($"Links:{link.Url}");
-                    }
-
-                    var files = msg.GetGenericAttachment();
-                    foreach (var f in files)
-                    {
-                        Console.WriteLine($"Image:Name={f.Name} Mime={f.Mime}");
-                    }
+                    var logger = _serviceCollection.BuildServiceProvider().GetRequiredService<ILogger<Chat>>();
+                    logger.LogError(ex.ToString());
+                    return null;
                 }
-                return responseMsg;
             }
         }
 

@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Implements;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Entities
 {
-    public partial class ChatHistories
+    public partial class ChatHistories : AuditedEntity
     {
-        [Key]
-        public Guid Id { get; set; }
+    
         [Required]
         [StringLength(200)]
         public string FromId { get; set; }
@@ -20,9 +20,5 @@ namespace Domain.Entities
         public string ToId { get; set; }
         [Required]
         public string Content { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public Guid CreatedBy { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public Guid UpdatedBy { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Repository.UnitOfWork
         private bool disposed = false;
         protected readonly ILogger<IUnitOfWork> _logger;
 
-        public UnitOfWork(TContext context, IHttpContextAccessor httpContextAccessor, ILogger<IUnitOfWork> logger)
+        public UnitOfWork(TContext context, ILogger<IUnitOfWork> logger)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _logger = logger;
@@ -64,10 +64,8 @@ namespace Repository.UnitOfWork
                 _context.ChangeTracker.AutoDetectChangesEnabled = false;
                 _context.ChangeTracker.DetectChanges();
 
-                var modifiedEntries = _context.ChangeTracker.Entries<IAuditedEntity>()
+                var modifiedEntries = _context.ChangeTracker.Entries()
                     .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted);
-
-                AuditEntity(modifiedEntries);
 
                 _context.ChangeTracker.DetectChanges();
 
@@ -76,41 +74,6 @@ namespace Repository.UnitOfWork
             finally
             {
                 _context.ChangeTracker.AutoDetectChangesEnabled = currentDetectChangesSetting;
-            }
-        }
-
-        private void AuditEntity(IEnumerable<EntityEntry<IAuditedEntity>> modifiedEntries)
-        {
-            var now = DateTime.Now;
-            var userId = Guid.Empty;
-            foreach (var entry in modifiedEntries)
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.Entity.CreatedAt = now;
-                        entry.Entity.CreatedBy = userId;
-                        AuditUpdatingField(entry);
-
-                        _logger.LogInformation("Added entity {@Entity} by user {UserId}", entry.Entity, userId);
-                        break;
-
-                    case EntityState.Modified:
-                        AuditUpdatingField(entry);
-
-                        _logger.LogInformation("Updated entity to {@Entity} by user {UserId}", entry.Entity, userId);
-                        break;
-
-                    case EntityState.Deleted:
-                        _logger.LogInformation("Deleted entity {@Entity} by user {UserId}", entry.Entity, userId);
-                        break;
-                }
-            }
-
-            void AuditUpdatingField(EntityEntry<IAuditedEntity> entry)
-            {
-                entry.Entity.UpdatedAt = now;
-                entry.Entity.UpdatedBy = userId;
             }
         }
     }
