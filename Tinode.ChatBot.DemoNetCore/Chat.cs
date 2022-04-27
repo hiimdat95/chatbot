@@ -541,7 +541,7 @@ namespace Tinode.ChatBot.DemoNetCore
 
 "- Không phải là các đối tượng đang chịu sự quản lý của pháp luật, không phải là những đối tượng đang thi hành án mà chưa được xóa án tích. Lý lịch phải được xác nhận là đối tượng có nhân thân tốt chấp hành tốt mọi đường lối chính sách của Đảng, Nhà nước</ p > ";
                             }
-                            if (msg.Text.ToLower().Contains("Mức lương"))
+                            if (msg.Text.ToLower().Contains("mức lương"))
                             {
                                 responseText = "<p>Mức thu nhập bình quân của thực tập sinh Nhật Bản một tháng rơi vào khoảng 120.000 - 160.000Yên/tháng, chưa kể các khoản làm thêm, tăng ca." +
 
