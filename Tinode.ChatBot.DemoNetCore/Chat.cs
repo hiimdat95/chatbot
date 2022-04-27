@@ -469,18 +469,18 @@ namespace Tinode.ChatBot.DemoNetCore
                         },
                         new MessageReponse
                         {
-                            Key ="",
-                            Message = ""
+                            Key ="Những đối tượng nào có thể đi tham gia xuất khẩu lao động tại Nhật Bản của Công ty",
+                            Message = "<p>- L&agrave; c&ocirc;ng d&acirc;n Vi&#7879;t Nam c&oacute; nguy&#7879;n v&#7885;ng &#273;i l&agrave;m vi&#7879;c t&#7841;i n&#432;&#7899;c ngo&agrave;i m&agrave; trong &#273;&#7897; tu&#7893;i C&ocirc;ng ty c&oacute; nhu c&#7847;u tuy&#7875;n d&#7909;ng (ph&#7843;i &#273;&#7843;m b&#7843;o &#273;&#7911; 18 tu&#7893;i tr&#7903; l&ecirc;n, C&ocirc;ng ty kh&ocirc;ng tuy&#7875;n nh&#7919;ng ng&#432;&#7901;i d&#432;&#7899;i 18 tu&#7893;i t&iacute;nh &#273;&#7911; theo ng&agrave;y sinh) - Kh&ocirc;ng ph&acirc;n bi&#7879;t v&ugrave;ng mi&#7873;n. gi&#7899;i t&iacute;nh &#8230; - Kh&ocirc;ng ph&#7843;i l&agrave; c&aacute;c &#273;&#7889;i t&#432;&#7907;ng &#273;ang ch&#7883;u s&#7921; qu&#7843;n l&yacute; c&#7911;a ph&aacute;p lu&#7853;t, kh&ocirc;ng ph&#7843;i l&agrave; nh&#7919;ng &#273;&#7889;i t&#432;&#7907;ng &#273;ang thi h&agrave;nh &aacute;n m&agrave; ch&#432;a &#273;&#432;&#7907;c x&oacute;a &aacute;n t&iacute;ch. L&yacute; l&#7883;ch ph&#7843;i &#273;&#432;&#7907;c x&aacute;c nh&#7853;n l&agrave; &#273;&#7889;i t&#432;&#7907;ng c&oacute; nh&acirc;n th&acirc;n t&#7889;t ch&#7845;p h&agrave;nh t&#7889;t m&#7885;i &#273;&#432;&#7901;ng l&#7889;i ch&iacute;nh s&aacute;ch c&#7911;a &#272;&#7843;ng, Nh&agrave; n&#432;&#7899;c</p>"
                         },
                         new MessageReponse
                         {
-                            Key ="",
-                            Message = ""
+                            Key ="Độ tuổi bao nhiêu thì có thể đi XKLĐ tại Nhật Bản",
+                            Message = "<p>- Nh&#7853;t B&#7843;n:  &bull; &#272;&#7897; tu&#7893;i tuy&#7875;n d&#7909;ng: t&#7915; 19 &#273;&#7871;n 27 tu&#7893;i (&#273;&#7889;i v&#7899;i L&#272; &#273;i Nh&#7853;t B&#7843;n) ngo&agrave;i ra t&ugrave;y thu&#7897;c v&agrave;o &#273;&#417;n h&agrave;ng &#273;&#7863;c bi&#7879;t c&oacute; th&#7875; tuy&#7875;n d&#7909;ng &#273;&#7897; tu&#7893;i cao h&#417;n.  &bull; &#272;&#7889;i v&#7899;i L&#272; Nam: Cao t&#7915; 165cm tr&#7903; l&ecirc;n. N&#7863;ng: 55kg tr&#7903; l&ecirc;n  &bull; &#272;&#7889;i v&#7899;i lao &#273;&#7897;ng N&#7919;: Cao t&#7915; 150 tr&#7903; l&ecirc;n, N&#7863;ng: 42kg</p>"
                         },
                         new MessageReponse
                         {
-                            Key ="",
-                            Message = ""
+                            Key ="Mức lương, thu nhập khi đi XKLĐ tại Nhật Bản",
+                            Message = "<p>M&#7913;c thu nh&#7853;p b&igrave;nh qu&acirc;n c&#7911;a th&#7921;c t&#7853;p sinh Nh&#7853;t B&#7843;n m&#7897;t th&aacute;ng r&#417;i v&agrave;o kho&#7843;ng 120.000 - 160.000Y&ecirc;n/th&aacute;ng, ch&#432;a k&#7875; c&aacute;c kho&#7843;n l&agrave;m th&ecirc;m, t&#259;ng ca. Th&ocirc;ng th&#432;&#7901;ng sau khi tr&#7915; c&aacute;c kho&#7843;n chi ph&iacute; sinh ho&#7841;t v&agrave; t&iacute;nh c&#7843; ti&#7873;n l&agrave;m th&ecirc;m h&agrave;ng th&aacute;ng th&igrave; thu nh&#7853;p th&#7921;c l&#297;nh c&#7911;a c&aacute;c b&#7841;n th&#7921;c t&#7853;p sinh s&#7869; r&#417;i v&agrave;o kho&#7843;ng 13-17 man (t&#432;&#417;ng &#273;&#432;&#417;ng 28-37 tri&#7879;u VN&#272;). N&#7871;u chi ti&ecirc;u ti&#7871;t ki&#7879;m h&#7907;p l&yacute; th&igrave; sau 3 n&#259;m ch&#259;m chi l&agrave;m vi&#7879;c v&#7873; n&#432;&#7899;c b&#7841;n c&oacute; th&#7875; ti&#7871;t ki&#7879;m &#273;&#432;&#7907;c t&#7915; 600.000.000VN&#272; - 800.000.000VN&#272;. &#272;&acirc;y l&agrave; s&#7889; ti&#7873;n kh&ocirc;ng h&#7873; nh&#7887; &#273;&#7875; b&#7841;n c&oacute; th&#7875; l&agrave;m &#259;n, trang tr&#7843;i cu&#7897;c s&#7889;ng.</p>"
                         },
                         new MessageReponse
                         {
